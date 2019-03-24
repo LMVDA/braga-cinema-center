@@ -1,0 +1,57 @@
+
+// ************************************************************************************
+// Número de lugares reservados para uma dada sessão
+// ************************************************************************************
+
+db.Sessao.find( { _id : ObjectId("5a62613848885afdf4a608f7") } ).count()
+
+
+// ************************************************************************************
+// Bilhetes reservados para uma dada sessão
+// ************************************************************************************
+
+db.Sessao.find( { _id : ObjectId("5a62613848885afdf4a608f7") } ).pretty()
+
+
+// ************************************************************************************
+// Obter as reservas/compras de um cliente
+// ************************************************************************************
+
+db.Cliente.find( { "bilhetes.idCliente" : ObjectId("5a625c8348885afdf4a608f3") } ).pretty()
+
+db.Cliente.find( { "username" : "mariaS" } ).pretty()
+
+db.Cliente.find( { "nome" : "Maria Santos" } ).pretty()
+
+
+// ************************************************************************************
+// Obter todas as Sessões de um Filme
+// ************************************************************************************
+
+db.Sessao.find( { "idFilme" : ObjectId("5a6266f45e6a2cb99c23443d") } ).pretty()
+
+
+// ************************************************************************************
+// Obter todos os clientes que reservaram um bilhete de uma determinada sessão
+// ************************************************************************************
+
+db.Cliente.find( { "bilhetes.idCliente" : ObjectId("5a625c8348885afdf4a608f3") } ).pretty()
+
+
+// ************************************************************************************
+// Obter todas os filmes de uma sala
+// ************************************************************************************
+
+db.Filme.aggregate([
+	{ $lookup: {
+		from: "Sala",
+		localField: "idSala",
+		foreignField: "_id",
+		as : "salas"
+	}},
+	{ $match: {
+		"salas.nomeSala" : "Woody Allen"
+	}}
+])
+
+
